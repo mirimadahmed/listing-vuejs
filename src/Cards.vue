@@ -26,13 +26,17 @@ export default {
   name: "Cards",
   data() {
     return {
-      listings: []
+      listings: [],
+      searchText: ''
     };
   },
   mounted() {
     this.loadListings();
   },
   methods: {
+    searchIt (){
+      console.log($event.payload);
+    },
     loadListings(){
       var self = this;
       var app_id = "app838WoUK7gksAto";
@@ -56,7 +60,7 @@ export default {
             return 'https://picsum.photos/600/300/?image=25'
     },
     openListing(id){
-        this.$router.push('/Listing/id'+this.listings[id].id)
+        this.$router.push({ name: 'Listing', params: { id: this.listings[id].id }})
     }
   }
 };
