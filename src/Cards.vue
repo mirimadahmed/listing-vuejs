@@ -2,16 +2,16 @@
   <div>
       <b-container>
         <b-row>
-            <b-col sm="4" v-for="listing in listings" :key="listing.id">
-                <b-card :title="listing.fields['Title/Topic']"
-                    :img-src="listing.fields.Attachment[0].thumbnails.large.url"
+            <b-col sm="4" v-for="(listing, i) in listings" :key="i">
+                <b-card :title="listing.fields['Title/Topic'].substring(0,20)"
+                    :img-src="getImageUrl(i)"
                     img-alt="Image"
                     img-top
                     tag="article"
                     style="max-width: 20rem;"
                     class="mb-2">
                     <p class="card-text">
-                        {{listing.fields.Clipping}}
+                        {{listing.fields.Clipping.substring(0, 50)}}
                     </p>
                 </b-card>
             </b-col>
@@ -48,6 +48,12 @@ export default {
       }).catch(function(error){
         console.log(error)
       });
+    },
+    getImageUrl(id){
+        if(this.listings[id].fields.Attachment)
+            return this.listings[id].fields.Attachment[0].thumbnails.large.url
+        else
+            return 'https://picsum.photos/600/300/?image=25'
     }
   }
 };
