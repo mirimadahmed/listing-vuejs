@@ -2,7 +2,19 @@
   <div>
       <b-container>
         <b-row>
-            <b-col sm="4" v-for="listing in listings" :key="listing.id">{{listing.fields['Title/Topic']}}</b-col>
+            <b-col sm="4" v-for="listing in listings" :key="listing.id">
+                <b-card :title="listing.fields['Title/Topic']"
+                    :img-src="listing.fields.Attachment[0].thumbnails.large.url"
+                    img-alt="Image"
+                    img-top
+                    tag="article"
+                    style="max-width: 20rem;"
+                    class="mb-2">
+                    <p class="card-text">
+                        {{listing.fields.Clipping}}
+                    </p>
+                </b-card>
+            </b-col>
         </b-row>
     </b-container>
   </div>

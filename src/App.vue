@@ -20,6 +20,7 @@
 
         </b-collapse>
       </b-navbar>
+      <br><br>
       <router-view></router-view>
 
   </div>
