@@ -2,7 +2,7 @@
   <div>
       <b-container>
         <b-row>
-            <b-col sm="4" v-for="(listing, i) in listings" :key="i">
+            <b-col sm="4" v-for="(listing, i) in listings" :key="i" @click="openListing(i)">
                 <b-card :title="listing.fields['Title/Topic'].substring(0,20)"
                     :img-src="getImageUrl(i)"
                     img-alt="Image"
@@ -54,6 +54,9 @@ export default {
             return this.listings[id].fields.Attachment[0].thumbnails.large.url
         else
             return 'https://picsum.photos/600/300/?image=25'
+    },
+    openListing(id){
+        this.$router.push('/Listing/id'+this.listings[id].id)
     }
   }
 };
