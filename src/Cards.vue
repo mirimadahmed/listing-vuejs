@@ -26,8 +26,7 @@ export default {
   name: "Cards",
   data() {
     return {
-      listings: [],
-      searchText: ''
+      listings: []
     };
   },
   mounted() {
