@@ -2,6 +2,9 @@
   <div>
       <b-container>
         <b-row>
+          <filters></filters>
+        </b-row>
+        <b-row>
             <b-col sm="4" v-for="(listing, i) in listings" :key="i" @click="openListing(i)">
                 <b-card :title="listing.fields['Title/Topic'].substring(0,20)"
                     :img-src="getImageUrl(i)"
@@ -22,8 +25,10 @@
 
 <script>
 import axios from 'axios';
+import Filters from './Filters.vue';
 export default {
   name: "Cards",
+  components: {Filters},
   data() {
     return {
       listings: []
