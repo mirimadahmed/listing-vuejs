@@ -22,6 +22,17 @@
                 </b-form-group>
               </b-col>
           </b-row>
+          <br>
+          <b-row>
+              <b-col>
+                <input type="radio" value="accending" v-model="dateFilter">
+                <label for="accending"> Accending</label>
+              </b-col>
+              <b-col>
+                <input type="radio" value="decending" v-model="dateFilter">
+                <label for="decending"> Decending</label>
+              </b-col>
+          </b-row>
       <br><br>
   </div>
 </template>
@@ -38,6 +49,7 @@ export default {
         {text: 'Opinion', value: 'opinion'},
         {text: 'Audio/Visual', value: 'audio/Visual'}],
       selectedTopics: [],
+      dateFilter: 'accending',
     };
   },
   methods: {},
@@ -47,6 +59,9 @@ export default {
       },
       selectedTopics () {
           this.$emit('topicSelected', this.selectedTopics);
+      },
+      dateFilter () {
+          this.$emit('dateFilter', this.dateFilter);
       }
   }
 };

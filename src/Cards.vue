@@ -3,7 +3,7 @@
       <b-container>
         <b-row>
           <b-col sm="12">
-            <filters @searched="searchIt" @topicSelected="topicSelected"></filters>
+            <filters @searched="searchIt" @topicSelected="topicSelected" @dateFilter="dateFilter"></filters>
           </b-col>
         </b-row>
         <b-row>
@@ -28,6 +28,7 @@
 <script>
 import axios from 'axios';
 import Filters from './Filters.vue';
+import moment from 'moment'
 export default {
   name: "Cards",
   components: {Filters},
@@ -36,11 +37,21 @@ export default {
       listings: [],
       searchQuery: '',
       selectedTopics: [],
+      datefilter: 'accending',
     };
   },
   computed: {
     filteredListings () {
       let filtered = this.listings;
+      if(this.datefilter === 'accending'){
+        filtered = filtered.sort((a,b) => {
+          return moment(a.fields['Date Added']) > moment(b.fields['Date Added']);
+        });
+      }else if(this.datefilter === 'decending'){
+        filtered = filtered.sort((a,b) => {
+          return moment(a.fields['Date Added']) < moment(b.fields['Date Added']);
+        });
+      }
       if(this.searchQuery.length > 0) {
         filtered = this.listings.filter(x => x.fields['Title/Topic'].toLowerCase().trim().indexOf(this.searchQuery.toLowerCase().trim()) !== -1);
       }
@@ -59,6 +70,9 @@ export default {
     },
     topicSelected (selectedTopics){
       this.selectedTopics = selectedTopics;
+    },
+    dateFilter (filter) {
+      this.datefilter = filter;
     },
     loadListings(){
       var self = this;
