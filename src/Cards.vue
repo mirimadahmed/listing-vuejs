@@ -2,10 +2,12 @@
   <div>
       <b-container>
         <b-row>
-          <filters></filters>
+          <b-col sm="12">
+            <filters @searched="searchIt"></filters>
+          </b-col>
         </b-row>
         <b-row>
-            <b-col sm="4" v-for="(listing, i) in listings" :key="i" @click="openListing(i)">
+            <b-col sm="4" v-for="(listing, i) in filteredListings" :key="i" @click="openListing(i)">
                 <b-card :title="listing.fields['Title/Topic'].substring(0,20)"
                     :img-src="getImageUrl(i)"
                     img-alt="Image"
@@ -31,15 +33,24 @@ export default {
   components: {Filters},
   data() {
     return {
-      listings: []
+      listings: [],
+      searchQuery: '',
     };
+  },
+  computed: {
+    filteredListings () {
+      if(this.searchQuery.length > 0) {
+        return this.listings.filter(x => x.fields['Title/Topic'].toLowerCase().trim().indexOf(this.searchQuery.toLowerCase().trim()) !== -1);
+      }
+      return this.listings;
+    }
   },
   mounted() {
     this.loadListings();
   },
   methods: {
-    searchIt (){
-      console.log($event.payload);
+    searchIt (searchText){
+      this.searchQuery = searchText;
     },
     loadListings(){
       var self = this;
