@@ -10,7 +10,7 @@
           </b-row>
           <b-row>
               <b-col sm="8">
-                   <b-img :src="currentListing.fields.Attachment[0].url" fluid alt="Responsive image" />
+                   <b-img :src="getImageUrl()" fluid alt="Responsive image" />
               </b-col>
               <b-col sm="4">
                   <h1>Description</h1>
@@ -59,7 +59,13 @@ export default {
                 console.log(error)
             });
         
-      }
+      },
+      getImageUrl(){
+        if(this.currentListing.fields.Attachment)
+            return this.currentListing.Attachment[0].thumbnails.large.url
+        else
+            return 'https://picsum.photos/600/300/?image=25'
+    },
   }
 };
 </script>
