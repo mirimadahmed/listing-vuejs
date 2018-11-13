@@ -3,7 +3,7 @@
       <b-container>
         <b-row>
           <b-col sm="12">
-            <filters @searched="searchIt"></filters>
+            <filters @searched="searchIt" @topicSelected="topicSelected"></filters>
           </b-col>
         </b-row>
         <b-row>
@@ -35,14 +35,19 @@ export default {
     return {
       listings: [],
       searchQuery: '',
+      selectedTopics: [],
     };
   },
   computed: {
     filteredListings () {
+      let filtered = this.listings;
       if(this.searchQuery.length > 0) {
-        return this.listings.filter(x => x.fields['Title/Topic'].toLowerCase().trim().indexOf(this.searchQuery.toLowerCase().trim()) !== -1);
+        filtered = this.listings.filter(x => x.fields['Title/Topic'].toLowerCase().trim().indexOf(this.searchQuery.toLowerCase().trim()) !== -1);
       }
-      return this.listings;
+      if(this.selectedTopics.length > 0) {
+        filtered = filtered.filter(x => x.fields.Topics && x.fields.Topics.some(r => this.selectedTopics.includes(r)));
+      }
+      return filtered;
     }
   },
   mounted() {
@@ -51,6 +56,9 @@ export default {
   methods: {
     searchIt (searchText){
       this.searchQuery = searchText;
+    },
+    topicSelected (selectedTopics){
+      this.selectedTopics = selectedTopics;
     },
     loadListings(){
       var self = this;
