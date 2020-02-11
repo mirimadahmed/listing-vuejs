@@ -1,6 +1,6 @@
-# listing-vuejs
+# Listings Grid Vue.js
 
-> A Vue.js project
+> A simple vue js listing project. An olx kind of listings grid where you display your items.
 
 ## Build Setup
 
